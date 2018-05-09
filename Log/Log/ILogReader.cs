@@ -13,7 +13,7 @@ namespace Log
         /// <summary>
         /// 日志当前所在行号,从0开始
         /// </summary>
-        int Line { get; set; }
+        int CurrentLine { get; set; }
 
         /// <summary>
         /// 从日志中读取一行信息，并移动至下一行

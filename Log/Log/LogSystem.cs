@@ -79,7 +79,7 @@ namespace Log
         public int AppendLine(string text)
         {
             Writer.AppendLine(text);
-            return Writer.Line;
+            return Writer.CurrentLine;
         }
 
         public int InsertLineAt(int line, string text, out string result)
@@ -94,7 +94,7 @@ namespace Log
                 result = "指定行号有误";
             }
 
-            return Writer.Line;
+            return Writer.CurrentLine;
         }
 
         public string Find(string word)

@@ -5,7 +5,7 @@ namespace UnitTestProject1
     public class Reader : ILogReader
     {
         public ISource Source { get; set; }
-        public int Line { get; set; }
+        public int CurrentLine { get; set; }
 
         public string ReadLine()
         {

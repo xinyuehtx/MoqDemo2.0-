@@ -145,7 +145,7 @@ namespace UnitTestProject1
 
             logSystem.ReadLine();
 
-            Assert.AreEqual(4, logSystem.Reader.Line);
+            Assert.AreEqual(4, logSystem.Reader.CurrentLine);
         }
 
 
@@ -189,7 +189,7 @@ namespace UnitTestProject1
 
             logSystem.AppendLine("运行正常");
 
-            Assert.AreEqual(4, logSystem.Writer.Line);
+            Assert.AreEqual(4, logSystem.Writer.CurrentLine);
         }
 
         //伪造自动属性
@@ -207,7 +207,7 @@ namespace UnitTestProject1
 
             logSystem.AppendLine("运行正常");
 
-            Assert.AreEqual(4, logSystem.Writer.Line);
+            Assert.AreEqual(4, logSystem.Writer.CurrentLine);
         }
 
         //递归伪造属性
