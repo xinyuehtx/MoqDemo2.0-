@@ -22,6 +22,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenRead(ILogReader实例);
 
             var result = logSystem.ReadLine();
 
@@ -40,6 +41,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenRead(ILogReader实例);
 
             var result = logSystem.ReadLineAt(3);
 
@@ -62,6 +64,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenRead(ILogReader实例);
 
             var result = logSystem.ReadLineAt(i);
 
@@ -84,6 +87,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenRead(ILogReader实例);
 
             var result = logSystem.ReadLineAt(i);
 
@@ -107,6 +111,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenRead(ILogReader实例);
 
             var result = logSystem.Find(s);
 
@@ -124,6 +129,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenRead(ILogReader实例);
 
             var result = logSystem.ReadLineAt(-1);
 
@@ -142,6 +148,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenRead(ILogReader实例);
 
             logSystem.ReadLine();
 
@@ -164,6 +171,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenRead(ILogReader实例);
 
             var result = logSystem.ReadAll();
 
@@ -186,6 +194,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenAppend(ILogWriter实例);
 
             logSystem.AppendLine("运行正常");
 
@@ -204,6 +213,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenAppend(ILogWriter实例);
 
             logSystem.AppendLine("运行正常");
 
@@ -222,6 +232,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenAppend(ILogWriter实例);
 
             var result = logSystem.ShowUri();
 
@@ -242,6 +253,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenAppend(ILogWriter实例);
 
             Assert.AreEqual(new DateTime(2018, 10, 10), logSystem.UpdatedTime);
         }
@@ -266,6 +278,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenRead(ILogReader实例);
 
             var result = logSystem.ReadLineAt(i);
 
@@ -288,6 +301,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenRead(ILogReader实例);
 
             var result = logSystem.ReadLineAt(i);
 
@@ -312,6 +326,7 @@ namespace UnitTestProject1
             var logSystem = new LogSystem();
 
             //todo
+            //logSystem.OpenAppend(ILogWriter实例);
 
             var result = logSystem.Save();
         }

@@ -21,11 +21,13 @@ namespace UnitTestProject1
         public void ReadLine()
         {
             var logSystem = new LogSystem();
-
+            // 新建一个ILogReader的Mock对象，其Object属性即为我们需要的伪对象
             var fakeReader = new Mock<ILogReader>();
 
+            // 当调用ILogReader接口的ReadLine()方法时，将返回运行正常字符串
             fakeReader.Setup(fake => fake.ReadLine()).Returns("运行正常");
 
+            //将伪对象注入到被测试类
             logSystem.OpenRead(fakeReader.Object);
 
             var result = logSystem.ReadLine();
@@ -44,10 +46,13 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogReader的Mock对象，其Object属性即为我们需要的伪对象
             var fakeReader = new Mock<ILogReader>();
 
+            // 当调用ILogReader接口的ReadLineAt(3)方法时，将返回运行正常字符串
             fakeReader.Setup(fake => fake.ReadLineAt(3)).Returns("运行正常");
 
+            //将伪对象注入到被测试类
             logSystem.OpenRead(fakeReader.Object);
 
             var result = logSystem.ReadLineAt(3);
@@ -70,11 +75,15 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogReader的Mock对象，其Object属性即为我们需要的伪对象
             var fakeReader = new Mock<ILogReader>();
 
+            // 当调用ILogReader接口的ReadLineAt(3)方法时，将返回运行正常字符串
             fakeReader.Setup(fake => fake.ReadLineAt(3)).Returns("运行正常");
+            // 当调用ILogReader接口的ReadLineAt(4)方法时，将返回运行正常字符串
             fakeReader.Setup(fake => fake.ReadLineAt(4)).Returns("运行正常");
 
+            //将伪对象注入到被测试类
             logSystem.OpenRead(fakeReader.Object);
 
             var result = logSystem.ReadLineAt(i);
@@ -97,10 +106,13 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogReader的Mock对象，其Object属性即为我们需要的伪对象
             var fakeReader = new Mock<ILogReader>();
 
+            // 当调用ILogReader接口的ReadLineAt()方法，并传入任意int类型参数时，将返回运行正常字符串
             fakeReader.Setup(fake => fake.ReadLineAt(It.IsAny<int>())).Returns("运行正常");
 
+            //将伪对象注入到被测试类
             logSystem.OpenRead(fakeReader.Object);
 
             var result = logSystem.ReadLineAt(i);
@@ -124,10 +136,13 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogReader的Mock对象，其Object属性即为我们需要的伪对象
             var fakeReader = new Mock<ILogReader>();
 
+            // 当调用ILogReader接口的Find()方法，并传入任意string类型参数时，将返回$"{/*输入参数字符串*/}的位置在line1"字符串
             fakeReader.Setup(fake => fake.Find(It.IsAny<string>())).Returns((string value) => $"{value}的位置在line1");
 
+            //将伪对象注入到被测试类
             logSystem.OpenRead(fakeReader.Object);
 
             var result = logSystem.Find(s);
@@ -145,10 +160,13 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogReader的Mock对象，其Object属性即为我们需要的伪对象
             var fakeReader = new Mock<ILogReader>();
 
+            // 当调用ILogReader接口的ReadLineAt(-1)方法时，抛出ArgumentOutOfRangeException异常
             fakeReader.Setup(fake => fake.ReadLineAt(-1)).Throws<ArgumentOutOfRangeException>();
 
+            //将伪对象注入到被测试类
             logSystem.OpenRead(fakeReader.Object);
 
             var result = logSystem.ReadLineAt(-1);
@@ -167,12 +185,16 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogReader的Mock对象，其Object属性即为我们需要的伪对象
             var fakeReader = new Mock<ILogReader>();
 
+            // 伪造ILogReader接口的CurrentLine属性时，并且赋初值为3
             fakeReader.SetupProperty(fake => fake.CurrentLine, 3);
 
+            // 当调用ILogReader接口的ReadLine()方法时，触发回调函数，将伪对象的CurrentLine属性值+1
             fakeReader.Setup(fake => fake.ReadLine()).Callback(() => fakeReader.Object.CurrentLine++);
 
+            //将伪对象注入到被测试类
             logSystem.OpenRead(fakeReader.Object);
 
             logSystem.ReadLine();
@@ -195,14 +217,17 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogReader的Mock对象，其Object属性即为我们需要的伪对象
             var fakeReader = new Mock<ILogReader>();
-
+            // 当连续调用ILogReader接口的ReadLine()方法时，依次返回"运行正常"，"运行异常"，"存储空间不足"
+            // 并在最后抛出InvalidOperationException异常
             fakeReader.SetupSequence(fake => fake.ReadLine())
                       .Returns("运行正常")
                       .Returns("运行异常")
                       .Returns("存储空间不足")
                       .Throws<InvalidOperationException>();
 
+            //将伪对象注入到被测试类
             logSystem.OpenRead(fakeReader.Object);
 
             var result = logSystem.ReadAll();
@@ -225,16 +250,22 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogWriter的Mock对象，其Object属性即为我们需要的伪对象
             var fakeWriter = new Mock<ILogWriter>();
+            // 新建一个ISource的Mock对象，其Object属性即为我们需要的ISource伪对象
             var fakeSource = new Mock<ISource>();
+            //将ISource伪对象注入到ILogWriter伪对象的属性
             fakeWriter.SetupProperty(fake => fake.Source, fakeSource.Object);
 
             int count = 3;
 
+            // 当连续调用ILogWriter接口的CurrentLine属性的Get方法时，返回count的值
             fakeWriter.SetupGet(fake => fake.CurrentLine).Returns(() => count);
 
+            // 当连续调用ILogWriter接口的AppendLine方法，并输入任意string类型参数时，触发回调使count的值+1
             fakeWriter.Setup(fake => fake.AppendLine(It.IsAny<string>())).Callback(() => count++);
 
+            //将伪对象注入到被测试类
             logSystem.OpenAppend(fakeWriter.Object);
 
             logSystem.AppendLine("运行正常");
@@ -253,14 +284,21 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogWriter的Mock对象，其Object属性即为我们需要的伪对象
             var fakeWriter = new Mock<ILogWriter>();
+            // 新建一个ISource的Mock对象，其Object属性即为我们需要的ISource伪对象
             var fakeSource = new Mock<ISource>();
+            //将ISource伪对象注入到ILogWriter伪对象的属性
             fakeWriter.SetupProperty(fake => fake.Source, fakeSource.Object);
 
+            // 伪造ILogWriter接口的CurrentLine属性
             fakeWriter.SetupProperty(fake => fake.CurrentLine);
             fakeWriter.Object.CurrentLine = 3;
-            fakeWriter.Setup(fake => fake.AppendLine(It.IsAny<string>())).Callback(() => fakeWriter.Object.CurrentLine++);
+            // 当连续调用ILogWriter接口的AppendLine方法，并输入任意string类型参数时，触发回调使伪对象CurrentLine属性的值+1
+            fakeWriter.Setup(fake => fake.AppendLine(It.IsAny<string>()))
+                      .Callback(() => fakeWriter.Object.CurrentLine++);
 
+            //将伪对象注入到被测试类
             logSystem.OpenAppend(fakeWriter.Object);
 
             logSystem.AppendLine("运行正常");
@@ -279,9 +317,12 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogWriter的Mock对象，其Object属性即为我们需要的伪对象
             var fakeWriter = new Mock<ILogWriter>();
-            fakeWriter.SetupProperty(fake => fake.Source.Uri, new Uri("Log.txt",UriKind.Relative));
+            // 伪造ILogWriter接口的Source属性的Uri属性，并且赋初值new Uri("Log.txt", UriKind.Relative)
+            fakeWriter.SetupProperty(fake => fake.Source.Uri, new Uri("Log.txt", UriKind.Relative));
 
+            //将伪对象注入到被测试类
             logSystem.OpenAppend(fakeWriter.Object);
 
             var result = logSystem.ShowUri();
@@ -302,13 +343,17 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogWriter的Mock对象，其Object属性即为我们需要的伪对象
             var fakeWriter = new Mock<ILogWriter>();
+            // 新建一个ISource的Mock对象，其Object属性即为我们需要的ISource伪对象
             var fakeSource = new Mock<ISource>();
-
+            //将ISource伪对象注入到ILogWriter伪对象的属性
             fakeWriter.SetupProperty(fake => fake.Source, fakeSource.Object);
 
+            //将伪对象注入到被测试类
             logSystem.OpenAppend(fakeWriter.Object);
 
+            // 触发ISource接口的Updated事件，并且设sender为ISource伪对象，参数为new DateTime(2018, 10, 10)
             fakeSource.Raise(fake => fake.Updated += null, fakeSource.Object, new DateTime(2018, 10, 10));
 
             Assert.AreEqual(new DateTime(2018, 10, 10), logSystem.UpdatedTime);
@@ -333,14 +378,21 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogReader的Mock对象，其Object属性即为我们需要的伪对象
             var fakeReader = new Mock<ILogReader>();
 
+            // 当调用ILogReader接口的ReadLineAt()方法，并传入[0,10]范围的int类型参数时，将返回运行正常字符串
             fakeReader.Setup(fake => fake.ReadLineAt(It.IsInRange<int>(0, 10, Range.Inclusive))).Returns("运行正常");
+            // 当调用ILogReader接口的ReadLineAt()方法，并传入(int.MinValue,0)范围的int类型参数时，
+            // 抛出ArgumentOutOfRangeException异常
             fakeReader.Setup(fake => fake.ReadLineAt(It.IsInRange<int>(int.MinValue, 0, Range.Exclusive)))
                       .Throws<ArgumentOutOfRangeException>();
+            // 当调用ILogReader接口的ReadLineAt()方法，并传入(10,int.MaxValue)范围的int类型参数时，
+            // 抛出ArgumentOutOfRangeException异常
             fakeReader.Setup(fake => fake.ReadLineAt(It.IsInRange<int>(10, int.MaxValue, Range.Exclusive)))
                       .Throws<ArgumentOutOfRangeException>();
 
+            //将伪对象注入到被测试类
             logSystem.OpenRead(fakeReader.Object);
 
             var result = logSystem.ReadLineAt(i);
@@ -363,14 +415,21 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogReader的Mock对象，其Object属性即为我们需要的伪对象
             var fakeReader = new Mock<ILogReader>();
 
+            // 当调用ILogReader接口的ReadLineAt()方法，并传入[0,10]范围的int类型参数时，将返回运行正常字符串
             fakeReader.Setup(fake => fake.ReadLineAt(It.IsInRange<int>(0, 10, Range.Inclusive))).Returns("运行正常");
+            // 当调用ILogReader接口的ReadLineAt()方法，并传入(int.MinValue,0)范围的int类型参数时，
+            // 抛出ArgumentOutOfRangeException异常
             fakeReader.Setup(fake => fake.ReadLineAt(It.IsInRange<int>(int.MinValue, 0, Range.Exclusive)))
                       .Throws<ArgumentOutOfRangeException>();
+            // 当调用ILogReader接口的ReadLineAt()方法，并传入(10,int.MaxValue)范围的int类型参数时，
+            // 抛出ArgumentOutOfRangeException异常
             fakeReader.Setup(fake => fake.ReadLineAt(It.IsInRange<int>(10, int.MaxValue, Range.Exclusive)))
                       .Throws<ArgumentOutOfRangeException>();
 
+            //将伪对象注入到被测试类
             logSystem.OpenRead(fakeReader.Object);
 
             var result = logSystem.ReadLineAt(i);
@@ -395,12 +454,17 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
+            // 新建一个ILogWriter的Mock对象，其Object属性即为我们需要的伪对象
             var fakeWriter = new Mock<ILogWriter>();
+            // 新建一个ISource的Mock对象，其Object属性即为我们需要的ISource伪对象
             var fakeSource = new Mock<ISource>();
-
+            //将ISource伪对象注入到ILogWriter伪对象的属性
             fakeWriter.SetupProperty(fake => fake.Source, fakeSource.Object);
+
+            // 当调用ILogReader接口的Save()方法时，返回true
             fakeWriter.Setup(fake => fake.Save()).Returns(true);
 
+            //将伪对象注入到被测试类
             logSystem.OpenAppend(fakeWriter.Object);
 
             var result = logSystem.Save();
