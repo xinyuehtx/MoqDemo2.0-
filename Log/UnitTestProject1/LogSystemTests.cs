@@ -11,7 +11,7 @@ namespace UnitTestProject1
     {
         #region 伪造方法
 
-        //伪造无参数方法
+        //伪造无参数方法返回值
         /// <summary>
         /// 假设：日志当前行内容为“运行正常”
         /// 执行：ReadLine
@@ -35,7 +35,7 @@ namespace UnitTestProject1
             Assert.AreEqual("运行正常", result);
         }
 
-        //伪造有参数方法
+        //伪造有参数方法返回值
         /// <summary>
         /// 假设：日志第3行内容为“运行正常”
         /// 执行：ReadLineAt(3)
