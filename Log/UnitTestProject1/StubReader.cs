@@ -2,7 +2,7 @@ using Log;
 
 namespace UnitTestProject1
 {
-    public class Reader : ILogReader
+    public class StubReader : ILogReader
     {
         public ISource Source { get; set; }
         public int CurrentLine { get; set; }

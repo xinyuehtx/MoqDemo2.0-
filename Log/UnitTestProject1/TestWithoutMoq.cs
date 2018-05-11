@@ -16,7 +16,7 @@ namespace UnitTestProject1
         {
             var logSystem = new LogSystem();
 
-            logSystem.OpenRead(new Reader());
+            logSystem.OpenRead(new StubReader());
 
             var result = logSystem.ReadLine();
 
